@@ -2,7 +2,17 @@
 name = "marbling"
 version = "0.1.0"
 edition = "2021"
-
+description = "cryptocurrency wallets "
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "marbling"
+path = "marbling/main.rs"
+
+[workspace]
+members = [
+    "./lib/bitcoin", "./lib/ethereum", "./lib/aptoslabs", "./lib/dfinity","./lib/doge","./lib/ethereumlayer2",
+    "./lib/openlayer","./lib/polkadot","./lib/solana","./lib/sui","./lib/tendermint","./lib/zcash","structure"
+]
 
 [dependencies]

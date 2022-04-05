@@ -1,8 +1,9 @@
 [package]
 name = "aptoslabs"
-version = "0.1.0"
+version = "0.0.1"
 edition = "2021"
-
+license = "AGPL-v3"
+repository = "https://github.com/johndoe0x/marbling/tree/master/lib/aptoslabs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]

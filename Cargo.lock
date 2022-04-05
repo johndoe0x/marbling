@@ -3,5 +3,57 @@
 version = 3
 
 [[package]]
+name = "aptoslabs"
+version = "0.0.1"
+
+[[package]]
+name = "bitcoin"
+version = "0.0.1"
+
+[[package]]
+name = "dfinity"
+version = "0.0.1"
+
+[[package]]
+name = "doge"
+version = "0.0.1"
+
+[[package]]
+name = "ethereum"
+version = "0.0.1"
+
+[[package]]
+name = "ethereumlayer2"
+version = "0.0.1"
+
+[[package]]
 name = "marbling"
+version = "0.1.0"
+
+[[package]]
+name = "openlayer"
+version = "0.0.1"
+
+[[package]]
+name = "polkadot"
+version = "0.1.0"
+
+[[package]]
+name = "solana"
+version = "0.1.0"
+
+[[package]]
+name = "structure"
+version = "0.1.0"
+
+[[package]]
+name = "sui"
+version = "0.1.0"
+
+[[package]]
+name = "tendermint"
+version = "0.1.0"
+
+[[package]]
+name = "zcash"
 version = "0.1.0"
