@@ -2,7 +2,9 @@
 name = "ethereum"
 version = "0.0.1"
 edition = "2021"
-license = "AGPL-v3"
+description = "cryptocurrency wallet library supports ethereum distributed key generation and signing"
+license = "AGPL-3.0"
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
