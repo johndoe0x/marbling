@@ -7,19 +7,11 @@ name = "aptoslabs"
 version = "0.0.1"
 
 [[package]]
-name = "bitcoin"
-version = "0.0.1"
-
-[[package]]
 name = "dfinity"
 version = "0.0.1"
 
 [[package]]
 name = "doge"
-version = "0.0.1"
-
-[[package]]
-name = "ethereum"
 version = "0.0.1"
 
 [[package]]
@@ -29,6 +21,14 @@ version = "0.0.1"
 [[package]]
 name = "marbling"
 version = "0.1.0"
+
+[[package]]
+name = "marbling-bitcoin"
+version = "0.0.1"
+
+[[package]]
+name = "marbling-ethereum"
+version = "0.0.1"
 
 [[package]]
 name = "openlayer"

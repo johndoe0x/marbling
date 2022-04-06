@@ -1,5 +1,5 @@
 [package]
-name = "ethereum"
+name = "marbling-ethereum"
 version = "0.0.1"
 edition = "2021"
 description = "cryptocurrency wallet library supports ethereum distributed key generation and signing"
