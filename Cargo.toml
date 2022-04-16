@@ -17,3 +17,8 @@ members = [
 ]
 
 [dependencies]
+failure = { version = "0.1.8" }
+clap = { version = "~2.33.1" }
+colored = { version = "1.9" }
+
+marbling-structure = { path = "./structure", version="0.0.1"}
