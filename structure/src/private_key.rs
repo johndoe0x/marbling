@@ -27,11 +27,14 @@ pub enum PrivateKeyError {
     #[fail(display="wrong byte length: {}", _0 )]
     InvalidByteLength(usize),
 
-    #[fail(display="Invalid char length: {}", _0, _1)]
+    #[fail(display="Invalid char length: {}", _0)]
     InvalidCharaterLength(usize),
 
     #[fail(display="Invalid private key checksum : {{ expected : {:?}, found: {:?} }}", _0, _1)]
     InvalidChecksum(String,String),
+
+    #[fail(display="Invalid private key prefix : {:?}", _0)]
+    InvalidPrefix(Vec<u8>),
 
     #[fail(display="Wrong network :{{ expected: {:?}, found: {:?} }} ", _0, _1)]
     InvalidNetwork(String,String),

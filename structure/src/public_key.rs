@@ -5,14 +5,16 @@ use crate::private_key::PrivateKey;
 use crate::no_std::*;
 use core::{fmt::{Debug,Display},str::FromStr,};
 
-pub trait PublicKey: Clone+ Debug+ Display+ FromStr+ Send+ Sync+'static+ Eq+ Sized{
-    type Address:Address;
-    type Format:Format;
-    type PrivateKey:PrivateKey;
+pub trait PublicKey: Clone + Debug + Display + FromStr + Send + Sync + 'static + Eq + Sized {
+    type Address: Address;
+    type Format: Format;
+    type PrivateKey: PrivateKey;
 
+    /// Returns the address corresponding to the given public key.
     fn from_private_key(private_key: &Self::PrivateKey) -> Self;
 
-    fn to_addres(&self, format: &Self::Format) -> Result<Self::Address, AddressError>;
+    /// Returns the address of the corresponding private key.
+    fn to_address(&self, format: &Self::Format) -> Result<Self::Address, AddressError>;
 }
 
 #[derive(Debug, Fail)]
