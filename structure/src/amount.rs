@@ -1,7 +1,7 @@
 use crate::no_std::*;
 use core::{ fmt::{Debug,Display}, hash::Hash,};
 
-pub trait amount: Copy+Clone+Debug+Display+Send+Sync+'static+ Eq+Ord+Sized+Hash {
+pub trait Amount: Copy+Clone+Debug+Display+Send+Sync+'static+ Eq+Ord+Sized+Hash {
 }
 
 #[derive(Debug,Fail)]

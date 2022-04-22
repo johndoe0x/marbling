@@ -1,4 +1,4 @@
-use bech32::Error;
+
 
 use crate::derivation_path::DerivationPathError;
 

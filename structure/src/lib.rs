@@ -27,6 +27,8 @@ pub use self::derivation_path::*;
 pub mod extended_private_key;
 pub use self::extended_private_key::*;
 
+pub mod extended_public_key;
+pub use self::extended_public_key::*;
 pub mod format;
 pub use self::format::*;
 
@@ -42,6 +44,8 @@ pub use self::private_key::*;
 pub mod public_key;
 pub use self::public_key::*;
 
+pub mod wordlists;
+pub use self::wordlists::*;
 
 pub mod transaction;
 pub use self::transaction::*;
@@ -49,5 +53,4 @@ pub use self::transaction::*;
 pub mod utils;
 pub use self::utils::*;
 
-pub mod wordlist;
-pub use self::wordlist::*;
+
