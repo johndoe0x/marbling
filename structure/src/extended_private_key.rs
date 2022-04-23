@@ -21,13 +21,13 @@ pub trait ExtendedPrivateKey: Clone+ Debug+ Display + FromStr+ Send+ Sync+ 'stat
     type PrivateKey: PrivateKey;
     type PublicKey: PublicKey;
 
-    fn new(seed: &[u8], format:&Self::Format, path: &Self::DerivationPath) -> Result<Self, ExtendedPrivateKeyError> ;
-    fn new_master_key(seed: &[u8], format:&Self::Format) -> Result<Self, ExtendedPrivateKeyError> ;
-    fn derive_private_key (&self, path: &Self::DerivationPath) -> Result<Self, ExtendedPrivateKeyError>;
-    fn to_extended_publick_key (&self) -> Self::ExtendedPublickKey;
-    fn to_private_key (&self) -> Self::PrivateKey ;
-    fn to_public_key (&self) -> Self::PublicKey ;
-    fn to_adddress (&self , format:&Self::Format) -> Result<Self::Address, AddressError> ;
+    fn gen_new_master_key_from_path(seed: &[u8], format:&Self::Format, path: &Self::DerivationPath) -> Result<Self, ExtendedPrivateKeyError> ;
+    fn gen_new_master_key(seed: &[u8], format:&Self::Format) -> Result<Self, ExtendedPrivateKeyError> ;
+    fn return_private_key_from_path (&self, path: &Self::DerivationPath) -> Result<Self, ExtendedPrivateKeyError>;
+    fn return_extended_publick_key (&self) -> Self::ExtendedPublickKey;
+    fn return_private_key (&self) -> Self::PrivateKey ;
+    fn return_public_key (&self) -> Self::PublicKey ;
+    fn return_adddress (&self , format:&Self::Format) -> Result<Self::Address, AddressError> ;
 }
 
 #[derive(Debug,Fail)]

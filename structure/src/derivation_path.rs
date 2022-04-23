@@ -7,9 +7,9 @@ use core::{
 
 // TODO: In this file need to add explain what is the Derivation Path.
 pub trait DerivationPath: Clone + Debug + Display + FromStr + Send + Sync  + 'static + Eq + Sized {
-    fn to_vec(&self) -> Result<Vec<ChildIndex>, DerivationPathError>;
+    fn return_child_idx_vector_from_derive_path(&self) -> Result<Vec<ChildIndex>, DerivationPathError>;
 
-    fn from_vec(path: &Vec<ChildIndex>) -> Result<Self, DerivationPathError>;
+    fn return_derive_path_from_child_idx_vector(path: &Vec<ChildIndex>) -> Result<Self, DerivationPathError>;
     
 }
 

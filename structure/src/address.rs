@@ -15,8 +15,8 @@ pub trait Address : 'static+ Clone+ Debug+ Display+ FromStr+ Hash+ PartialEq+ Eq
     type PrivateKey: PrivateKey;
     type PublicKey: PublicKey;
 
-    fn from_private_key(private_key: &Self::PrivateKey, format: &Self::Format) -> Result<Self, AddressError>;
-    fn from_public_key(public_key: &Self::PublicKey, format: &Self::Format) -> Result<Self, AddressError>;
+    fn return_address_from_private_key(private_key: &Self::PrivateKey, format: &Self::Format) -> Result<Self, AddressError>;
+    fn return_address_from_public_key(public_key: &Self::PublicKey, format: &Self::Format) -> Result<Self, AddressError>;
         
 }
 #[derive(Debug, Fail)]
