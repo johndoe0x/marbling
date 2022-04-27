@@ -13,8 +13,7 @@ fn main() {
         AppSettings::SubcommandRequiredElseHelp,
     ];
     let app_subcommands = vec![
-        //NormalwalletCLI::new();
-        //MPCwalletCLI::new();
+        
     ];
     let arguments = App::new("Marbling")
         .version(app_version)
