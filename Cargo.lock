@@ -27,10 +27,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aptoslabs"
-version = "0.0.1"
-
-[[package]]
 name = "arrayref"
 version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -214,10 +210,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "dfinity"
-version = "0.0.1"
-
-[[package]]
 name = "digest"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -225,10 +217,6 @@ checksum = "f3d0c8c8752312f9713efd397ff63acb9f85585afbf179282e720e7704954dd5"
 dependencies = [
  "generic-array",
 ]
-
-[[package]]
-name = "doge"
-version = "0.0.1"
 
 [[package]]
 name = "ethbloom"
@@ -254,10 +242,6 @@ dependencies = [
  "primitive-types",
  "uint",
 ]
-
-[[package]]
-name = "ethereumlayer2"
-version = "0.0.1"
 
 [[package]]
 name = "failure"
@@ -450,12 +434,16 @@ dependencies = [
 ]
 
 [[package]]
-name = "marbling-bitcoin"
+name = "marbling-bitcoin-lib"
 version = "0.0.1"
 
 [[package]]
-name = "marbling-ethereum"
-version = "0.0.1"
+name = "marbling-dogecoin-lib"
+version = "0.0.0"
+
+[[package]]
+name = "marbling-ethereum-lib"
+version = "0.0.0"
 
 [[package]]
 name = "marbling-structure"
@@ -512,10 +500,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2839e79665f131bdb5782e51f2c6c9599c133c6098982a54c794358bf432529c"
 
 [[package]]
-name = "openlayer"
-version = "0.0.1"
-
-[[package]]
 name = "pin-project-lite"
 version = "0.1.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -532,10 +516,6 @@ name = "pin-utils"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
-
-[[package]]
-name = "polkadot"
-version = "0.1.0"
 
 [[package]]
 name = "ppv-lite86"
@@ -682,10 +662,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "eb703cfe953bccee95685111adeedb76fabe4e97549a58d16f03ea7b9367bb32"
 
 [[package]]
-name = "solana"
-version = "0.1.0"
-
-[[package]]
 name = "static_assertions"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -710,10 +686,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6bdef32e8150c2a081110b42772ffe7d7c9032b606bc226c8260fd97e0976601"
 
 [[package]]
-name = "sui"
-version = "0.1.0"
-
-[[package]]
 name = "syn"
 version = "1.0.91"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -735,10 +707,6 @@ dependencies = [
  "syn",
  "unicode-xid",
 ]
-
-[[package]]
-name = "tendermint"
-version = "0.1.0"
 
 [[package]]
 name = "textwrap"
@@ -847,7 +815,3 @@ name = "winapi-x86_64-pc-windows-gnu"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
-
-[[package]]
-name = "zcash"
-version = "0.1.0"

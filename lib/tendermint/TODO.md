@@ -1,8 +1,0 @@
-- Cosmos
-- Terra
-- Crypto dot com
-- Osmosis
-- Argoric
-- Akash
-- Anchor protocol
-- Anoma

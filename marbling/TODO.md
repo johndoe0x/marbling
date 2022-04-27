@@ -5,6 +5,7 @@
 
 - Online wallet
   - Generate address
+  
     - File format 
       - Json
       - txt
@@ -18,6 +19,51 @@
     - Pro : DKG , 2/3 Signing transaction & Account recovery
     - Extreme : Customized DKG ( up to 125 secret shares) & Customized thershold signing 
 
-  - Singning transaction
+  - Signing transaction
   
   - Auditing Singed Result
+
+
+- Benchmark wallets
+  - Exodus
+  - Argent
+  - Metamask
+  - Trustwallet
+  - Bitgo
+  - Multis
+  - Linen
+
+
+- wallet list 
+  - Bitcoin
+  - Ethereum
+    - zksync
+    - Arbitrum
+    - Optimism
+  - Solana
+  - Cosmos-sdk
+    - Terra
+    - Cosmos
+    - Crypto.com
+    - Osmosis
+  - Dogecoin
+  - Near
+  - Dfinity
+  - Zcash
+  - Sui
+  - Aptoslabscore
+
+
+- SubCommand structure
+  - Coin based 
+    - hd
+    - import
+    - import-hd
+    - export
+    - transaction
+    - distributed-key
+      - generation
+      - transaction
+  
+
+  

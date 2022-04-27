@@ -31,11 +31,37 @@ pub trait Transaction: Clone+ Send+ Sync+ 'static{
 
 #[derive(Debug, Fail)]
 pub enum TransactionError {
-    #[fail(display="{}:{}",_0,_1)]
-    Crate(&'static str, String),
+   #[fail(display="{}",_0)]
+   AddressError(AddressError),
 
-    #[fail(display= "invalid format {{expected: {:?} but got {:?}",_0,_1)]
-    IncompatibleFormat(String, String),
+   #[fail(display="{}",_0)]
+   AmountError(AmountError),
+
+   #[fail(display="witness conflicting anchor")]
+   ConflictingWitnessAnchor(),
+
+   #[fail(display="{}:{}", _0, _1)]
+   Crate(&'static str, String),
+
+   #[fail(display="{}", _0)]
+   ExtendedPrivateKeyError(ExtendedPrivateKeyError),
+
+   #[fail(display="decryption failed for enc_cyphertext: {}", _0)]
+   FailedNoteDecrytion(String),
+
+    #[fail(display = "{}",_0)]
+    InvalidInputs(String),
+
+    #[fail(display= "invalid ouput address: {}", _0)]
+    InvalidOuputAddress(String),
+
+    #[fail(display= "invalid output description: {}", _0)]
+    InvalidOutputDescription(String),
+
+    #[fail(display= "invalid RLP length: expected -9 , got - {}", _0)]
+    InvalidRlpLength(usize),
+
+    
     
 
 
