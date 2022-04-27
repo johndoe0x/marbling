@@ -12,7 +12,7 @@ path = "marbling/main.rs"
 
 [workspace]
 members = [
-    "./lib/bitcoin", "./lib/ethereum", "./lib/dogecoin","structure"
+    "structure"
 ]
 
 [dependencies]
