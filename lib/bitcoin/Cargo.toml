@@ -1,5 +1,5 @@
 [package]
-name = "marbling-bitcoin-lib"
+name = "marbling-bitcoin"
 version = "0.0.1"
 edition = "2021"
 description = "cryptocurrency wallet library supports distributed key generation and MPC signing for Bitcoin "
