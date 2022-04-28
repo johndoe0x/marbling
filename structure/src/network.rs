@@ -6,10 +6,10 @@ use core::{
 };
 
 pub trait Network: Copy+ Clone+ Debug+ Display+ FromStr+ Send+ Sync+ 'static +Eq+ Ord+ Sized+Hash {
-    const NAME: &'static str;
 }
 
 #[derive(Debug,Fail)]
+
 
 pub enum NetworkError {
     #[fail(display= "invalid extended private key prefix: {}", _0)]

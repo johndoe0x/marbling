@@ -1,6 +1,6 @@
 
 
-use crate::derivation_path::DerivationPathError;
+
 
 use crate::no_std::*;
 use core::{
@@ -8,7 +8,7 @@ use core::{
     hash::Hash,
 };
 
-pub trait Format:Clone + Debug+ Display+ Send+ Sync+ 'static+ Eq+ Ord+ Sized+ Hash {
+pub trait Format:Clone + Debug+ Display+ Send+ Sync++ Eq+ Ord+ Sized {
     
 }
 #[derive(Debug,Fail)]
@@ -22,7 +22,7 @@ pub enum  FormatError {
     #[fail(display= "prefix wrong : {:?}", _0)]
     InvalidPrefix(Vec<u8>),
 
-    #[fail(display= "unsupported deriva format : {}", _0)]
+    #[fail(display= "unsupported derive format : {}", _0)]
     UnspportedDerivationPath(String),
 
 }

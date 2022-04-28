@@ -25,9 +25,5 @@ fn main() {
         .set_term_width(0)
         .get_matches();
     
-    match arguments.subcommand() {
-        //TODO : start command working as wallet server daemon
-        //("start")
-        ()
-    }
+    
 }

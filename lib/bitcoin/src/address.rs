@@ -26,6 +26,6 @@ impl BitcoinAddressFormat {
         Network::return_address_prefix_from_network(self);
     }
 
-    pub fn return_addres_format_from_address_prefix( prefix: &[u8], networkType: NetworkType ) ->
+    pub fn return_addres_format_from_address_prefix( prefix: &[])
 }
 

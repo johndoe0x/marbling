@@ -1,8 +1,10 @@
 
-use crate::format::Format;
+
 use crate::private_key::{PrivateKey,PrivateKeyError};
 use crate::public_key::{PublicKey,PublicKeyError};
 use crate::no_std::*;
+
+use crate::derivation_path::DerivationPathError;
 
 use core::{
     fmt::{Debug,Display},
@@ -10,8 +12,8 @@ use core::{
     str::FromStr,
 };
 
-pub trait Address : 'static+ Clone+ Debug+ Display+ FromStr+ Hash+ PartialEq+ Eq+ Ord+ Send+ Sized+ Sync {
-    type Format: Format;
+pub trait Address : 'static+ Clone+ Debug+ Display+ FromStr+ Hash+ PartialEq+ Eq+ Ord+ Send+ Sized+ Sync+ 'static+ Hash {
+   //TODO: Network type has to be added. 
     type PrivateKey: PrivateKey;
     type PublicKey: PublicKey;
 
