@@ -434,16 +434,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "marbling-bitcoin-lib"
+name = "marbling-bitcoin"
 version = "0.0.1"
-
-[[package]]
-name = "marbling-dogecoin-lib"
-version = "0.0.0"
-
-[[package]]
-name = "marbling-ethereum-lib"
-version = "0.0.0"
 
 [[package]]
 name = "marbling-structure"
