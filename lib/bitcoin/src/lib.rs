@@ -1,8 +1,12 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        let result = 2 + 2;
-        assert_eq!(result, 4);
-    }
-}
+#![cfg_attr(not(feature = "std"), no_std)]
+#![warn(unused_extern_crates, dead_code)]
+#![forbid(unsafe_code)]
+
+#[macro_use]
+extern crate failure;
+
+pub mod address;
+pub use self::address::*;
+
+pub mod network;
+pub use self::network::*;

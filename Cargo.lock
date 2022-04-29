@@ -437,6 +437,7 @@ dependencies = [
 name = "marbling-bitcoin"
 version = "0.0.1"
 dependencies = [
+ "failure",
  "serde",
 ]
 

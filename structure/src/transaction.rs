@@ -1,8 +1,8 @@
 use crate::address::{Address, AddressError};
 use crate::AmountError;
 use crate::ExtendedPrivateKeyError;
-use crate::Format;
-use crate::{PrivateKey, PrivateKeyError};
+use crate::PrivateKey;
+use crate::KeyError;
 use crate::PublicKey;
 use crate::no_std::*;
 use core::{fmt::{Debug, Display},hash::Hash};
@@ -13,7 +13,6 @@ pub trait TransactionId:Clone+ Debug+ Display+ Send+ Sync+ 'static+ Eq+ Ord+ Siz
 
 pub trait Transaction: Clone+ Send+ Sync+ 'static{
     type Address: Address;
-    type Format: Format;
     type PrivateKey: PrivateKey;
     type PublicKey: PublicKey;
     type TransactionId: TransactionId;
@@ -102,7 +101,7 @@ pub enum TransactionError {
     NullException(()),
 
     #[fail(display= "{}", _0)]
-    PrivateKeyError(PrivateKeyError),
+    KeyError(KeyError),
 
     #[fail(display= "Joinsplits are not supported")]
     UnSupportedJoinsplits,
@@ -150,9 +149,9 @@ impl From<ExtendedPrivateKeyError> for TransactionError {
         }
 }
 
-impl From<PrivateKeyError> for TransactionError {  
-    fn from(error: PrivateKeyError) -> Self {
-        TransactionError::PrivateKeyError(error)
+impl From<KeyError> for TransactionError {  
+    fn from(error: KeyError) -> Self {
+        TransactionError::KeyError(error)
     }   
 }
 

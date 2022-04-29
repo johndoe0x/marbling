@@ -1,9 +1,8 @@
 use crate::address::{Address,AddressError};
 use crate::derivation_path::{DerivationPath, DerivationPathError};
 use crate::extended_private_key::ExtendedPrivateKey;
-use crate::format::Format;
 use crate::network::NetworkError;
-use crate::public_key::{PublicKey, PublicKeyError};
+use crate::key::{PublicKey, KeyError};
 
 use crate::no_std::*;
 use core::{
@@ -14,7 +13,6 @@ pub trait ExtendedPublickKey: Clone+ Debug+Display+FromStr+Send+Sync+'static+ Eq
     type Address: Address;
     type DerivationPath: DerivationPath;
     type ExtendedPrivateKey: ExtendedPrivateKey;
-    type Format: Format;
     type PublicKey: PublicKey;
 
     fn from_extended_private_key(extended_private_key: &Self::ExtendedPrivateKey) ->Self;
@@ -23,7 +21,7 @@ pub trait ExtendedPublickKey: Clone+ Debug+Display+FromStr+Send+Sync+'static+ Eq
 
     fn to_public_key(&self)-> Self::PublicKey;
 
-    fn to_adddress(&self , format: &Self::Format) -> Result<Self::Address, AddressError>;
+    fn to_adddress(&self ) -> Result<Self::Address, AddressError>;
 }
 
 #[derive(Debug, Fail)]
@@ -57,7 +55,7 @@ pub enum ExtendedPublickKeyError {
     NetworkError(NetworkError),
 
     #[fail(display="{}", _0)]
-    PublicKeyError(PublicKeyError),
+    PublicKeyError(KeyError),
 
     #[fail(display="unsupported format: {}", _0)]
     UnsupportedFormat(String),

@@ -4,9 +4,8 @@
 use crate::address::{Address,AddressError};
 use crate::extended_private_key::{ExtendedPrivateKey,ExtendedPrivateKeyError};
 use crate::extended_public_key::ExtendedPublickKey;
-use crate::format::Format;
-use crate::private_key::{PrivateKey, PrivateKeyError};
-use crate::public_key:: PublicKey;
+
+use crate::key:: {PrivateKey,PublicKey,KeyError};
 use crate::wordlists::WordlistError;
 use crate::no_std::*;
 use core::{
@@ -21,7 +20,6 @@ use rand::Rng;
 
 pub trait Mnemonic:Clone+ Debug+ Display+ FromStr+ Send+ Sync+ 'static+ Eq+ Sized {
     type Address:Address;
-    type Format:Format;
     type PrivateKey: PrivateKey;
     type PublicKey:PublicKey;
 
@@ -30,7 +28,7 @@ pub trait Mnemonic:Clone+ Debug+ Display+ FromStr+ Send+ Sync+ 'static+ Eq+ Size
     fn return_phase_from_mnemonic(&self) -> Result<String, MnemonicError>;
     fn return_private_key_from_mnemonic(&self, password: Option<&str>) -> Result<Self::PrivateKey, MnemonicError>;
     fn return_public_key_from_mnemonic (&self, password: Option<&str>) -> Result<Self::PublicKey, MnemonicError>;
-    fn return_address_from_mnemonic( &self, password: Option<&str>, format:&Self::Format) -> Result< Self::Address, MnemonicError>; 
+    fn return_address_from_mnemonic( &self, password: Option<&str>) -> Result< Self::Address, MnemonicError>; 
 }
 
 
@@ -83,7 +81,7 @@ pub enum MnemonicError {
     MissingWord,
 
     #[fail(display="{}", _0)]
-    PrivateKeyError(PrivateKeyError),
+    PrivateKeyError(KeyError),
 
     #[fail(display="{}",_0)]
     WordlistError(WordlistError),
@@ -108,8 +106,8 @@ impl From<ExtendedPrivateKeyError> for MnemonicError {
     }
 }
 
-impl From<PrivateKeyError> for MnemonicError {
-    fn from(error: PrivateKeyError) -> Self {
+impl From<KeyError> for MnemonicError {
+    fn from(error: KeyError) -> Self {
         MnemonicError::PrivateKeyError(error)
     }
 }

@@ -3,10 +3,9 @@
 use crate::address::{Address,AddressError};
 use crate::derivation_path::{DerivationPath,DerivationPathError};
 use crate::extended_public_key::ExtendedPublickKey;
-use crate::format::Format;
+
 use crate::network::NetworkError;
-use crate::private_key::PrivateKey;
-use crate::public_key::PublicKey;
+use crate::key::{PrivateKey,PublicKey};
 
 use crate::no_std::*;
 use core::{fmt::{Debug,Display}, str::FromStr,};
@@ -17,17 +16,17 @@ pub trait ExtendedPrivateKey: Clone+ Debug+ Display + FromStr+ Send+ Sync+ 'stat
     type Address: Address;
     type DerivationPath: DerivationPath;
     type ExtendedPublickKey: ExtendedPublickKey;
-    type Format: Format;
+
     type PrivateKey: PrivateKey;
     type PublicKey: PublicKey;
 
-    fn gen_new_master_key_from_path(seed: &[u8], format:&Self::Format, path: &Self::DerivationPath) -> Result<Self, ExtendedPrivateKeyError> ;
-    fn gen_new_master_key(seed: &[u8], format:&Self::Format) -> Result<Self, ExtendedPrivateKeyError> ;
+    fn gen_master_key_from_path(seed: &[u8], path: &Self::DerivationPath) -> Result<Self, ExtendedPrivateKeyError> ;
+    fn gen_master_key(seed: &[u8]) -> Result<Self, ExtendedPrivateKeyError> ;
     fn return_private_key_from_path (&self, path: &Self::DerivationPath) -> Result<Self, ExtendedPrivateKeyError>;
     fn return_extended_publick_key (&self) -> Self::ExtendedPublickKey;
-    fn return_private_key (&self) -> Self::PrivateKey ;
+    fn return_key (&self) -> Self::PrivateKey ;
     fn return_public_key (&self) -> Self::PublicKey ;
-    fn return_adddress (&self , format:&Self::Format) -> Result<Self::Address, AddressError> ;
+    fn return_adddress (&self) -> Result<Self::Address, AddressError> ;
 }
 
 #[derive(Debug,Fail)]

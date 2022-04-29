@@ -9,8 +9,6 @@ pub trait Network: Copy+ Clone+ Debug+ Display+ FromStr+ Send+ Sync+ 'static +Eq
 }
 
 #[derive(Debug,Fail)]
-
-
 pub enum NetworkError {
     #[fail(display= "invalid extended private key prefix: {}", _0)]
     InvalidExtendedPrivateKeyPrefix(String),

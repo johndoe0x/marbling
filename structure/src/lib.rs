@@ -29,8 +29,6 @@ pub use self::extended_private_key::*;
 
 pub mod extended_public_key;
 pub use self::extended_public_key::*;
-pub mod format;
-pub use self::format::*;
 
 pub mod mnemonic;
 pub use self::mnemonic::*;
@@ -38,11 +36,8 @@ pub use self::mnemonic::*;
 pub mod network;
 pub use self::network::*;
 
-pub mod private_key;
-pub use self::private_key::*;
-
-pub mod public_key;
-pub use self::public_key::*;
+pub mod key;
+pub use self::key::*;
 
 pub mod wordlists;
 pub use self::wordlists::*;
