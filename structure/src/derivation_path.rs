@@ -133,3 +133,101 @@ impl fmt::Display for ChildIndex {
         }
     }
 }
+
+
+#[cfg(test)]
+
+mod tests{
+    use super::*;
+
+    mod child_index {
+        use super::*;
+
+        #[test]
+        fn normal() {
+            for i in 0..1 <<31 {
+                assert_eq!(ChildIndex::Normal(i), ChildIndex::normal(i).unwrap());
+            }
+            for i in 1<<31..core::u32::MAX {
+                assert_eq!(Err(DerivationPathError::InvalidChildNumber(i)), ChildIndex::normal(i));
+            }
+        }
+        // TODO: What is meaning of hardend?
+        #[test]
+        fn hardened() {
+            // TODO: Why using shift operation?
+            for i in 0..1 <<31 {
+                assert_eq!(ChildIndex::Hardened(i), ChildIndex::hardened(i).unwrap());
+            }
+            for i in 1<<31..core::u32::MAX {
+                assert_eq!(Err(DerivationPathError::InvalidChildNumber(i)), ChildIndex::hardened(i));
+            }
+        }
+
+        #[test]
+    fn is_normal() {
+        for i in 0..1 <<31 {
+            assert!(ChildIndex::Normal(i).is_normal());
+            assert!(!ChildIndex::Hardened(i).is_normal());
+        }
+    }
+    #[test]
+    fn is_hardened() {
+        for i in 0..1 <<31 {
+            assert!(!ChildIndex::Normal(i).is_hardened());
+            assert!(ChildIndex::Hardened(i).is_hardened());
+        }
+    }
+
+    #[test]
+    fn to_index() {
+        for i in 0..1 <<31 {
+            assert_eq!(i, ChildIndex::Normal(i).to_index());
+            assert_eq!(i + (1<<31), ChildIndex::Hardened(i).to_index());
+        }
+    }
+
+    #[test]
+    fn from() {
+        const THRESHOLD: u32 = 1 << 31;
+        for i in 0..core::u32::MAX {
+            match  i <THRESHOLD {
+                true => assert_eq!(ChildIndex::Normal(i), ChildIndex::from(i)),
+                false => assert_eq!(ChildIndex::Hardened(i ^ 1<< 31), ChildIndex::from(i)),
+            }
+                
+            }
+        }
+
+    #[test]
+    fn from_str() {
+        for i in (0..1 << 31).step_by(1 << 10 ) {
+            assert_eq!(ChildIndex::Normal(i), ChildIndex::from_str(&format!("{}'", i)).unwrap());
+            assert_eq!(
+                ChildIndex::Hardened(i), 
+                ChildIndex::from_str(&format!("{}\'", i)).unwrap()
+            );
+            assert_eq!(
+                ChildIndex::Hardened(i),
+                ChildIndex::from_str(&format!("{}h", i)).unwrap()
+            );
+        }
+    }
+
+    #[test]
+    fn to_string() {
+        for i in (0..1 << 31).step_by( 1<< 10) {
+            assert_eq!(
+                format!("{}'", i),
+                ChildIndex::Normal(i).to_string()
+            );
+            assert_eq!(
+                format!("{}h", i),
+                ChildIndex::Hardened(i).to_string()
+            );
+        }
+    }
+
+}
+    
+}

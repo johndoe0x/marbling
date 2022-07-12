@@ -5,7 +5,7 @@ use crate::address::{Address,AddressError};
 use crate::extended_private_key::{ExtendedPrivateKey,ExtendedPrivateKeyError};
 use crate::extended_public_key::ExtendedPublickKey;
 
-use crate::key:: {PrivateKey,PublicKey,KeyError};
+use crate::public_key:: {PrivateKey,PublicKey,KeyError};
 use crate::wordlists::WordlistError;
 use crate::no_std::*;
 use core::{
@@ -20,29 +20,30 @@ use rand::Rng;
 
 pub trait Mnemonic:Clone+ Debug+ Display+ FromStr+ Send+ Sync+ 'static+ Eq+ Sized {
     type Address:Address;
+    type Format: Format;
     type PrivateKey: PrivateKey;
     type PublicKey:PublicKey;
 
-    fn gen_new_mnemonic<R: Rng> (rng: &mut R) ->  Result<Self, MnemonicError>;
-    fn return_mnemonic_from_phrase(phrase: &str) -> Result<Self, MnemonicError>;
-    fn return_phase_from_mnemonic(&self) -> Result<String, MnemonicError>;
-    fn return_private_key_from_mnemonic(&self, password: Option<&str>) -> Result<Self::PrivateKey, MnemonicError>;
-    fn return_public_key_from_mnemonic (&self, password: Option<&str>) -> Result<Self::PublicKey, MnemonicError>;
-    fn return_address_from_mnemonic( &self, password: Option<&str>) -> Result< Self::Address, MnemonicError>; 
+    fn new<R: Rng> (rng: &mut R) ->  Result<Self, MnemonicError>;
+    fn from_phrase(phrase: &str) -> Result<Self, MnemonicError>;
+    fn to_phase(&self) -> Result<String, MnemonicError>;
+    fn to_private_key(&self, password: Option<&str>) -> Result<Self::PrivateKey, MnemonicError>;
+    fn to_public_key (&self, password: Option<&str>) -> Result<Self::PublicKey, MnemonicError>;
+    fn to_address( &self, password: Option<&str>) -> Result< Self::Address, MnemonicError>; 
 }
 
 
 pub trait MnemonicCount:Mnemonic {
-    fn return_mnemonic_given_word_count<R:Rng>(rng: &mut R, word_count: u8) -> Result<Self,MnemonicError>;
+    fn new_with_count<R:Rng>(rng: &mut R, word_count: u8) -> Result<Self,MnemonicError>;
 }
 
 pub trait MnemonicExtendedKeys: Mnemonic {
     type ExtendedPrivateKey: ExtendedPrivateKey;
     type ExtendedPublickKey: ExtendedPublickKey;
     
-    fn return_extended_private_key_from_mnemonic( &self, password: Option<&str>) -> Result<Self::ExtendedPrivateKey, MnemonicError>;
+    fn to_extended_private_key( &self, password: Option<&str>) -> Result<Self::ExtendedPrivateKey, MnemonicError>;
 
-    fn return_extended_publick_key_from_mnemonic( &self, password: Option<&str>) -> Result<Self::ExtendedPublickKey, MnemonicError>;
+    fn to_extended_publick_key( &self, password: Option<&str>) -> Result<Self::ExtendedPublickKey, MnemonicError>;
 }
 
 #[derive(Debug, Fail)]

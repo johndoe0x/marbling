@@ -2,7 +2,7 @@ use crate::address::{Address,AddressError};
 use crate::derivation_path::{DerivationPath, DerivationPathError};
 use crate::extended_private_key::ExtendedPrivateKey;
 use crate::network::NetworkError;
-use crate::key::{PublicKey, KeyError};
+use crate::public_key::{PublicKey, KeyError};
 
 use crate::no_std::*;
 use core::{
@@ -13,11 +13,12 @@ pub trait ExtendedPublickKey: Clone+ Debug+Display+FromStr+Send+Sync+'static+ Eq
     type Address: Address;
     type DerivationPath: DerivationPath;
     type ExtendedPrivateKey: ExtendedPrivateKey;
+    type Format: Format;
     type PublicKey: PublicKey;
 
     fn from_extended_private_key(extended_private_key: &Self::ExtendedPrivateKey) ->Self;
 
-    fn derive_public_key(&self, path: &Self::DerivationPath) -> Result<Self, ExtendedPublickKeyError>;
+    fn derive(&self, path: &Self::DerivationPath) -> Result<Self, ExtendedPublickKeyError>;
 
     fn to_public_key(&self)-> Self::PublicKey;
 
@@ -78,6 +79,12 @@ impl From<NetworkError> for ExtendedPublickKeyError {
         ExtendedPublickKeyError::NetworkError(error)
     }
 }
+impl From<PublicKeyError> for ExtendedPublickKeyError {
+    fn from(error: PublicKeyError) -> Self {
+        ExtendedPublickKeyError::PublicKeyError(error)
+    }
+}
+
 
 impl From<base58::FromBase58Error> for ExtendedPublickKeyError {
     fn from(error: base58::FromBase58Error) -> Self {
@@ -106,6 +113,12 @@ impl From<crypto_mac::InvalidKeyLength> for ExtendedPublickKeyError {
 impl From<core::num::ParseFloatError> for ExtendedPublickKeyError {
     fn from(error: core::num::ParseFloatError) -> Self {
         ExtendedPublickKeyError::Crate("core::num", format!("{:?}", error))
+    }
+}
+
+impl From<crypto_mac::InvalidKeyLength> for ExtendedPublickKeyError {
+    fn from(error: crypto_mac::InvalidKeyLength) -> Self {
+        ExtendedPublickKeyError::Crate("crypto-mac", format!("{:?}", error))
     }
 }
 
