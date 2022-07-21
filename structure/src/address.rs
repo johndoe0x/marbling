@@ -1,10 +1,11 @@
 
 
+// TODO: Start here -21st JUL
 use crate::format::Format;
 use crate::private_key::{PrivateKey, PrivateKeyError};
 use crate::public_key::{PublicKey, PublicKeyError};
-use crate::no_std::*;
 
+use crate::no_std::*;
 use core::{
     fmt::{Debug, Display},
     hash::Hash,
@@ -12,12 +13,14 @@ use core::{
 };
 
 
-pub trait Address : 'static+ Clone+ Debug+ Display+ FromStr+ Hash+ PartialEq+ Eq+ Ord+ Send+ Sized+ Sync+ 'static+ Hash {
+pub trait Address : 
+    'static+ Clone+ Debug+ Display+ FromStr+ Hash+ PartialEq+ Eq+ Ord+ Send+ Sized+ Sync {
     type NetworkType;
     type PrivateKey: PrivateKey;
     type PublicKey: PublicKey;
 
     fn from_private_key(private_key: &Self::PrivateKey, network_type: &Self::NetworkType) -> Result<Self, AddressError>;
+    
     fn from_public_key(public_key: &Self::PublicKey, network_type: &Self::NetworkType) -> Result<Self, AddressError>;
         
 }
@@ -52,18 +55,16 @@ pub enum AddressError {
 
     #[fail(display = "{}", _0)]
     Message(String),
+
+    #[fail(display = "missing public spend key and/or public view key")]
+    MissingPublicKey,
     
     #[fail(display = " {}", _0)]
-    PrivateKeyError(KeyError),
+    PrivateKeyError(PrivateKeyError),
 
     #[fail(display = " {}", _0)]
-    PublicKeyError(KeyError),
+    PublicKeyError(PublicKeyError),
 
-    #[fail(display = "{}", _0)]
-    DerivationPathError(DerivationPathError),
-
-    #[fail(display= "unsupported derive format : {}", _0)]
-    UnspportedDerivationPath(String),
 }
 
 impl From<crate::no_std::io::Error> for AddressError {
@@ -84,8 +85,16 @@ impl From<&'static str> for AddressError {
     }
 }
 
-impl From<DerivationPathError> for AddressError {
-    fn from(error: DerivationPathError) -> Self {
-        AddressError::DerivationPathError(error)
+impl From<PrivateKeyError> for AddressError {
+    fn from(error: PrivateKeyError) -> Self {
+        AddressError::PrivateKeyError(error)
     }
 }
+
+impl From<PublicKeyError> for AddressError {
+    fn from(error: PublicKeyError) -> Self {
+        AddressError::PublicKeyError(error)
+    }
+}
+
+
