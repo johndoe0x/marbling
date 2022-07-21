@@ -5,24 +5,23 @@ use core::{
     str::FromStr,};
 
 
-// TODO: In this file need to add explain what is the Derivation Path.
 pub trait DerivationPath: Clone + Debug + Display + FromStr + Send + Sync  + 'static + Eq + Sized {
-    fn return_child_idx_vector_from_derive_path(&self) -> Result<Vec<ChildIndex>, DerivationPathError>;
+    fn to_vec(&self) -> Result<Vec<ChildIndex>, DerivationPathError>;
 
-    fn return_derive_path_from_child_idx_vector(path: &Vec<ChildIndex>) -> Result<Self, DerivationPathError>;
+    fn from_vec(path: &Vec<ChildIndex>) -> Result<Self, DerivationPathError>;
     
 }
 
 #[derive(Debug, Fail, PartialEq, Eq)]
 
 pub enum  DerivationPathError {
-    #[fail(display = "expected BIP32")]
+    #[fail(display = "expected BIP32 path")]
     ExpectedBIP32Path,
 
-    #[fail(display = "expected BIP44")]
+    #[fail(display = "expected BIP44 path")]
     ExpectedBIP44Path,
 
-    #[fail(display = "expected BIP49")]
+    #[fail(display = "expected BIP49 path")]
     ExpectedBIP49Path,
 
     #[fail(display = "expected valid Ethereum derivation path")]
@@ -31,13 +30,13 @@ pub enum  DerivationPathError {
     #[fail(display = "expected ZIP32")]
     ExpectedZIP32Path,
     
-    #[fail(display = "expected hardend")]
+    #[fail(display = "expected hardend path")]
     ExpectedHardenedPath,
 
-    #[fail(display = "expected normal")]
+    #[fail(display = "expected normal path")]
     ExpectedNormalPath,
 
-    #[fail(display = "Child number is wrong: {}", _0)]
+    #[fail(display = "invalid child number: {}", _0)]
     InvalidChildNumber(u32),
 
     #[fail(display = "Child number format is wrong")]
@@ -58,7 +57,6 @@ pub enum ChildIndex {
 
 impl ChildIndex{
     pub fn normal(index: u32) -> Result<Self, DerivationPathError> {
-        //TODO: have to know what is this code meaning. 
         if index &(1<<31) == 0 {
             Ok(ChildIndex::Normal(index))
         } else {
@@ -77,12 +75,14 @@ impl ChildIndex{
     pub fn is_normal(&self) -> bool{
         !self.is_hardened()
     }
+
     pub fn is_hardened(&self) -> bool{
         match *self{
             ChildIndex::Hardened(_) => true,
             ChildIndex::Normal(_) => false,
         }
     }
+
     pub fn to_index(&self)-> u32 {
         match self {
             &ChildIndex::Hardened(i) => i +(1 <<31),
@@ -132,4 +132,21 @@ impl fmt::Display for ChildIndex {
             ChildIndex::Normal(number) => write!(f, "{}'", number),
         }
     }
+}
+
+#[cfg(test)]
+mod tests{
+    use super::*;
+
+    #[test]
+    fn normal() {
+        for i in 0..1 <<31 {
+            assert_eq!(ChildIndex::Normal(i), ChildIndex::normal(i).unwrap());
+        }
+
+        for i in 1<<31..core::u32::MAX  {
+            assert_eq!(Err(DerivationPathError::InvalidChildNumber(i)), ChildIndex::normal(i));
+        }
+    }
+    
 }

@@ -16,6 +16,7 @@ extern crate failure;
 pub mod no_std;
 
 pub mod address;
+mod format;
 pub use self::address::*;
 
 pub mod amount;
@@ -36,8 +37,6 @@ pub use self::mnemonic::*;
 pub mod network;
 pub use self::network::*;
 
-pub mod key;
-pub use self::key::*;
 
 pub mod wordlists;
 pub use self::wordlists::*;

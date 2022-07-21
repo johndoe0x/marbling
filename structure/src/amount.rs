@@ -1,12 +1,11 @@
 use crate::no_std::*;
 use core::{ fmt::{Debug,Display}, hash::Hash,};
 
-pub trait Amount: Copy+Clone+Debug+Display+Send+Sync+'static+ Eq+Ord+Sized+Hash {
-}
+pub trait Amount: Copy+Clone+Debug+Display+Send+Sync+'static+ Eq+Ord+Sized+Hash {}
 
 #[derive(Debug,Fail)]
 pub enum  AmountError {
-    #[fail(display= "Amount : {} is exeeds {}", _0, _1)]
+    #[fail(display= "the amount: {} exceeds the supply bounds of {}", _0, _1)]
     AmountOutBounds(String,String),
 
     #[fail(display = "{} : {}", _0, _1)]

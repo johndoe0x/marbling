@@ -1,23 +1,24 @@
 
 
-use crate::key::{PublicKey,PrivateKey,KeyError};
+use crate::format::Format;
+use crate::private_key::{PrivateKey, PrivateKeyError};
+use crate::public_key::{PublicKey, PublicKeyError};
 use crate::no_std::*;
 
-use crate::derivation_path::DerivationPathError;
-
 use core::{
-    fmt::{Debug,Display},
+    fmt::{Debug, Display},
     hash::Hash,
-    str::FromStr,
+    str::FromStr
 };
+
 
 pub trait Address : 'static+ Clone+ Debug+ Display+ FromStr+ Hash+ PartialEq+ Eq+ Ord+ Send+ Sized+ Sync+ 'static+ Hash {
     type NetworkType;
     type PrivateKey: PrivateKey;
     type PublicKey: PublicKey;
 
-    fn return_address_from_private_key(private_key: &Self::PrivateKey, network_type: &Self::NetworkType) -> Result<Self, AddressError>;
-    fn return_address_from_public_key(public_key: &Self::PublicKey, network_type: &Self::NetworkType) -> Result<Self, AddressError>;
+    fn from_private_key(private_key: &Self::PrivateKey, network_type: &Self::NetworkType) -> Result<Self, AddressError>;
+    fn from_public_key(public_key: &Self::PublicKey, network_type: &Self::NetworkType) -> Result<Self, AddressError>;
         
 }
 #[derive(Debug, Fail)]
