@@ -79,6 +79,12 @@ impl From<NetworkError> for ExtendedPublickKeyError {
     }
 }
 
+impl From<PublicKeyError> for ExtendedPublickKeyError {
+    fn from(error: PublicKeyError) -> Self {
+        ExtendedPublickKeyError::PublicKeyError(error)
+    }
+}
+
 impl From<base58::FromBase58Error> for ExtendedPublickKeyError {
     fn from(error: base58::FromBase58Error) -> Self {
         ExtendedPublickKeyError::Crate("base58", format!("{:?}", error))
@@ -97,15 +103,15 @@ impl From<core::array::TryFromSliceError> for ExtendedPublickKeyError {
     }
 }
 
-impl From<crypto_mac::InvalidKeyLength> for ExtendedPublickKeyError {
-    fn from(error: crypto_mac::InvalidKeyLength) -> Self {
-        ExtendedPublickKeyError::Crate("crypto_mac", format!("{:?}", error))
+impl From<core::num::ParseIntError> for ExtendedPublickKeyError {
+    fn from(error: core::num::ParseIntError) -> Self {
+        ExtendedPublickKeyError::Crate("core::num", format!("{:?}", error))
     }
 }
 
-impl From<core::num::ParseFloatError> for ExtendedPublickKeyError {
-    fn from(error: core::num::ParseFloatError) -> Self {
-        ExtendedPublickKeyError::Crate("core::num", format!("{:?}", error))
+impl From<crypto_mac::InvalidKeyLength> for ExtendedPublickKeyError {
+    fn from(error: crypto_mac::InvalidKeyLength) -> Self {
+        ExtendedPublickKeyError::Crate("crypto_mac", format!("{:?}", error))
     }
 }
 
