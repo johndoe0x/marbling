@@ -1,9 +1,9 @@
 use crate::address::{Address, AddressError};
-use crate::AmountError;
-use crate::ExtendedPrivateKeyError;
-use crate::PrivateKey;
-use crate::KeyError;
-use crate::PublicKey;
+use crate::amount::AmountError;
+use crate::extended_private_key::ExtendedPrivateKeyError;
+use crate::format::Format;
+use crate::private_key::{PrivateKey, PrivateKeyError};
+use crate::public_key::PublicKey;
 use crate::no_std::*;
 use core::{fmt::{Debug, Display},hash::Hash};
 use rlp;
@@ -13,18 +13,19 @@ pub trait TransactionId:Clone+ Debug+ Display+ Send+ Sync+ 'static+ Eq+ Ord+ Siz
 
 pub trait Transaction: Clone+ Send+ Sync+ 'static{
     type Address: Address;
+    type Format: Format;
     type PrivateKey: PrivateKey;
     type PublicKey: PublicKey;
     type TransactionId: TransactionId;
     type TransactionParams;
 
-    fn return_unsigned_transaction( params: &Self::TransactionParams) -> Result<Self, TransactionError>;
+    fn new( params: &Self::TransactionParams) -> Result<Self, TransactionError>;
 
-    fn return_signed_transaction( &self, private_key: &Self::PrivateKey) -> Result<Self, TransactionError>;
+    fn sign( &self, private_key: &Self::PrivateKey) -> Result<Self, TransactionError>;
 
-    fn return_transaction_from_bytes(transaction: &Vec<u8>) -> Result<Self, TransactionError>;
+    fn from_transaction_bytes(transaction: &Vec<u8>) -> Result<Self, TransactionError>;
 
-    fn return_bytes_from_transaction(&self)-> Result<Vec<u8>, TransactionError>;
+    fn to_transaction_bytes(&self)-> Result<Vec<u8>, TransactionError>;
 
     fn return_transaction_id (&self)-> Result<Self::TransactionId, TransactionError>;
 }
@@ -37,11 +38,16 @@ pub enum TransactionError {
     #[fail(display="Global; {}",_0)]
     AmountError(AmountError),
 
-    #[fail(display="Global; {}", _0)]
-    ExtendedPrivateKeyError(ExtendedPrivateKeyError),
+    #[fail(display=" witness have a conflicting anchor")]
+    ConflictingWitnessAnchor(),
 
     #[fail(display="{}:{}", _0, _1)]
     Crate(&'static str, String),   
+
+    #[fail(display="Global; {}", _0)]
+    ExtendedPrivateKeyError(ExtendedPrivateKeyError),
+
+
 
     #[fail(display="ZCASH; invalid ephemeral key {}", _0)]
     InvalidEphemeralKey(String),
@@ -98,19 +104,16 @@ pub enum TransactionError {
     MissingSpendParams,
 
     #[fail(display= "Null : {:?}", _0)]
-    NullException(()),
+    NullError(()),
 
     #[fail(display= "{}", _0)]
-    KeyError(KeyError),
+    PrivateKeyError(PrivateKeyError),
 
     #[fail(display= "Joinsplits are not supported")]
     UnSupportedJoinsplits,
 
     #[fail(display= "Unsupported preimage operation on this address type: {}", _0)]
     UnsupportedPreimageOperation(String),
-
-    #[fail(display="ZCASH; witness conflicting anchor")]
-    ConflictingWitnessAnchor(),
 
     #[fail(display="ZCASH; decryption failed for enc_cyphertext: {}", _0)]
     FailedNoteDecrytion(String),
@@ -133,7 +136,7 @@ impl From< &'static str> for TransactionError {
 
 impl From<()> for TransactionError {
     fn from(error: ()) -> Self{
-        TransactionError::NullException(error)
+        TransactionError::NullError(error)
     }
 }
 
@@ -143,21 +146,33 @@ impl From<AddressError> for TransactionError {
         }
 }
 
+impl From<AmountError> for TransactionError {
+    fn from(error: AmountError) -> Self {
+        TransactionError::AmountError(error)
+        }
+}
+
 impl From<ExtendedPrivateKeyError> for TransactionError {
     fn from(error: ExtendedPrivateKeyError) -> Self {
         TransactionError::ExtendedPrivateKeyError(error)
         }
 }
 
-impl From<KeyError> for TransactionError {  
-    fn from(error: KeyError) -> Self {
-        TransactionError::KeyError(error)
+impl From<PrivateKeyError> for TransactionError {  
+    fn from(error: PrivateKeyError) -> Self {
+        TransactionError::PrivateKeyError(error)
     }   
 }
 
 impl From<base58::FromBase58Error> for TransactionError{
     fn from(error: base58::FromBase58Error) -> Self{
         TransactionError::Crate("base58", format!("{:?}", error))
+    }
+}
+
+impl From<base58_monero::base58::Error> for TransactionError{
+    fn from(error: base58_monero::base58::Error) -> Self{
+        TransactionError::Crate("base58_monero", format!("{:?}", error))
     }
 }
 

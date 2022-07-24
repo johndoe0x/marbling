@@ -2,7 +2,7 @@ use crate::address::{Address,AddressError};
 use crate::derivation_path::{DerivationPath, DerivationPathError};
 use crate::extended_private_key::ExtendedPrivateKey;
 use crate::network::NetworkError;
-use crate::key::{PublicKey, KeyError};
+use crate::public_key::{PublicKey, PublicKeyError};
 
 use crate::no_std::*;
 use core::{
@@ -55,7 +55,7 @@ pub enum ExtendedPublickKeyError {
     NetworkError(NetworkError),
 
     #[fail(display="{}", _0)]
-    PublicKeyError(KeyError),
+    PublicKeyError(PublicKeyError),
 
     #[fail(display="unsupported format: {}", _0)]
     UnsupportedFormat(String),
